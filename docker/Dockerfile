@@ -7,7 +7,6 @@ FROM golang:latest as gobuilder
 ENV MKCERT_VERSION=1.4.2
 RUN mkdir /workspace
 WORKDIR /workspace
-RUN go get github.com/amacneil/dbmate
 RUN wget -O mkcert.tgz "https://github.com/FiloSottile/mkcert/archive/v${MKCERT_VERSION}.tar.gz"
 RUN tar -xzf mkcert.tgz
 WORKDIR "/workspace/mkcert-${MKCERT_VERSION}"
@@ -86,7 +85,6 @@ COPY ./scripts/install-openresty /tmp/install-openresty
 
 # Copy golang built packages
 COPY --from=gobuilder /bin/mkcert /bin/mkcert
-COPY --from=gobuilder /go/bin/dbmate /bin/dbmate
 
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
