@@ -70,7 +70,8 @@ RUN apt-get update \
 	unzip \
 	zlib1g \
 	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
+	&& rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /var/cache/* /var/log/* /tmp/* /var/lib/dpkg/status-old
 
 COPY ./files/.bashrc /root/.bashrc
 
@@ -92,20 +93,16 @@ ARG OPENRESTY_VERSION
 ENV OPENRESTY_VERSION=${OPENRESTY_VERSION} \
 	CERT_HOME='/data/acme.sh/'
 
-# Install openresty, lua
+# Install openresty, lua, then clean up file system
 RUN apt-get update \
-	&& apt-get install -y \
-	gcc \
-	make \
-	socat \
+	&& apt-get install -y gcc make socat \
 	&& /tmp/install-lua \
 	&& /tmp/install-openresty \
-	&& rm -f /tmp/install-lua \
-	&& rm -f /tmp/install-openresty \
 	&& apt-get remove -y make gcc \
 	&& apt-get autoremove -y \
 	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
+	&& rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /var/cache/* /var/log/* /tmp/* /var/lib/dpkg/status-old
 
 # acme.sh
 RUN mkdir -p /data/acme.sh \

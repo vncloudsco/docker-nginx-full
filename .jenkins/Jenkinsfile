@@ -29,7 +29,8 @@ pipeline {
 					steps {
 						script {
 							env.BASE_TAG                = 'latest'
-							env.BUILDX_PUSH_TAGS        = "-t docker.io/jc21/${IMAGE}:${BASE_TAG}"
+							env.PUSH_IMAGE              = "jc21/${IMAGE}:${BASE_TAG}"
+							env.BUILDX_PUSH_TAGS        = "-t docker.io/${PUSH_IMAGE}"
 							env.BUILDX_PUSH_TAGS_GOLANG = "-t docker.io/jc21/${IMAGE}:golang"
 						}
 					}
@@ -44,7 +45,8 @@ pipeline {
 						script {
 							// Defaults to the Branch name, which is applies to all branches AND pr's
 							env.BASE_TAG                = "github-${BRANCH_LOWER}"
-							env.BUILDX_PUSH_TAGS        = "-t docker.io/jc21/${IMAGE}:${BASE_TAG}"
+							env.PUSH_IMAGE              = "jc21/${IMAGE}:${BASE_TAG}"
+							env.BUILDX_PUSH_TAGS        = "-t docker.io/${PUSH_IMAGE}"
 							env.BUILDX_PUSH_TAGS_GOLANG = "${BUILDX_PUSH_TAGS}-golang"
 						}
 					}
@@ -75,6 +77,18 @@ pipeline {
 						}
 					}
 				}
+			}
+		}
+		stage('Test') {
+			steps {
+				// Docker image check
+				sh '''docker run --rm \
+					-v /var/run/docker.sock:/var/run/docker.sock \
+					-v "$(pwd)/docker:/app" \
+					-e CI=true \
+					wagoodman/dive:latest --ci-config /app/.dive-ci \
+					"${PUSH_IMAGE}"
+				'''
 			}
 		}
 		stage('PR Comment') {
