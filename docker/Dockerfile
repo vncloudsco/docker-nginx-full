@@ -61,6 +61,7 @@ RUN apt-get update \
 	ca-certificates \
 	curl \
 	figlet \
+	jq \
 	libncurses6 \
 	libpcre3 \
 	libreadline7 \
@@ -90,8 +91,7 @@ COPY --from=gobuilder /bin/mkcert /bin/mkcert
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 ARG OPENRESTY_VERSION
-ENV OPENRESTY_VERSION=${OPENRESTY_VERSION} \
-	CERT_HOME='/data/acme.sh/'
+ENV OPENRESTY_VERSION=${OPENRESTY_VERSION}
 
 # Install openresty, lua, then clean up file system
 RUN apt-get update \
@@ -104,11 +104,6 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/cache/* /var/log/* /tmp/* /var/lib/dpkg/status-old
 
-# acme.sh
-RUN mkdir -p /data/acme.sh \
-	&& curl -o /bin/acme.sh 'https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh' \
-	&& chmod +x /bin/acme.sh
-
 LABEL org.label-schema.schema-version="1.0" \
 	org.label-schema.license="MIT" \
 	org.label-schema.name="nginx-full" \
@@ -116,3 +111,4 @@ LABEL org.label-schema.schema-version="1.0" \
 	org.label-schema.url="https://github.com/jc21/docker-nginx-full" \
 	org.label-schema.vcs-url="https://github.com/jc21/docker-nginx-full.git" \
 	org.label-schema.cmd="docker run --rm -ti jc21/nginx-full:latest"
+
