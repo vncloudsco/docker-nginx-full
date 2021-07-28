@@ -1,18 +1,4 @@
 #############
-# Go Builder - mkcert
-#############
-
-FROM golang:latest as gobuilder
-
-ENV MKCERT_VERSION=1.4.2
-RUN mkdir /workspace
-WORKDIR /workspace
-RUN wget -O mkcert.tgz "https://github.com/FiloSottile/mkcert/archive/v${MKCERT_VERSION}.tar.gz"
-RUN tar -xzf mkcert.tgz
-WORKDIR "/workspace/mkcert-${MKCERT_VERSION}"
-RUN go build -ldflags "-X main.Version=v${MKCERT_VERSION}" -o /bin/mkcert
-
-#############
 # Nginx Builder
 #############
 
@@ -85,13 +71,9 @@ COPY ./scripts/install-lua /tmp/install-lua
 COPY --from=nginxbuilder /tmp/openresty /tmp/openresty
 COPY ./scripts/install-openresty /tmp/install-openresty
 
-# Copy golang built packages
-COPY --from=gobuilder /bin/mkcert /bin/mkcert
-
-ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
-
 ARG OPENRESTY_VERSION
-ENV OPENRESTY_VERSION=${OPENRESTY_VERSION}
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
+	OPENRESTY_VERSION=${OPENRESTY_VERSION}
 
 # Install openresty, lua, then clean up file system
 RUN apt-get update \
