@@ -78,7 +78,7 @@ make -j2
 echo -e "${BLUE}❯ ${GREEN}OpenResty build completed${RESET}"
 # config modsec
 
-cd /usr/local/openresty/nginx
+cd /etc/nginx
 mkdir modsec
 wget https://gist.githubusercontent.com/vncloudsco/0c2cd7c164022499ff5c243efa34c5f9/raw/ec7a20aa42b1fd390849dff2554b37b7b8e8e4dc/modsecurity.conf
 cp /tmp/ModSecurity/unicode.mapping /usr/local/openresty/nginx/modsec
