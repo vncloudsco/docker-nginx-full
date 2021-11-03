@@ -17,7 +17,7 @@ git submodule init
 git submodule update
 ./build.sh
 ./configure
-make && make install 
+make -j2 && make -j2 install 
 popd
 
 # install modsec connector
