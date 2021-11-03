@@ -16,7 +16,87 @@ RUN apt-get install -y \
 	libffi-dev \
 	libssl-dev \
 	python3-venv \
-	ca-certificates
+	ca-certificates \
+	apache2-dev \
+	autoconf \
+	automake \
+	build-essential \
+	bzip2 \
+	checkinstall \
+	devscripts \
+	flex \
+	g++ \
+	gcc \
+	git \
+	graphicsmagick-imagemagick-compat \
+	graphicsmagick-libmagick-dev-compat \
+	libaio-dev \
+	libaio1 \
+	libass-dev \
+	libatomic-ops-dev \
+	libavcodec-dev \
+	libavdevice-dev \
+	libavfilter-dev \
+	libavformat-dev \
+	libavutil-dev \
+	libbz2-dev \
+	libcdio-cdda1 \
+	libcdio-paranoia1 \
+	libcdio13 \
+	libcurl4-openssl-dev \
+	libfaac-dev \
+	libfreetype6-dev \
+	libgd-dev \
+	libgeoip-dev \
+	libgeoip1 \
+	libgif-dev \
+	libgpac-dev \
+	libgsm1-dev \
+	libjack-jackd2-dev \
+	libjpeg-dev \
+	libjpeg-progs \
+	libjpeg8-dev \
+	liblmdb-dev \
+	libmp3lame-dev \
+	libncurses5-dev \
+	libopencore-amrnb-dev \
+	libopencore-amrwb-dev \
+	libpam0g-dev \
+	libpcre3 \
+	libpcre3-dev \
+	libperl-dev \
+	libpng12-dev \
+	libpng12–0 \
+	libpng12-dev \
+	libreadline-dev \
+	librtmp-dev \
+	libsdl1.2-dev \
+	libssl-dev \
+	libssl1.0.0 \
+	libswscale-dev \
+	libtheora-dev \
+	libtiff5-dev \
+	libtool \
+	libva-dev \
+	libvdpau-dev \
+	libvorbis-dev \
+	libxml2-dev \
+	libxslt-dev \
+	libxslt1-dev \
+	libxslt1.1 \
+	libxvidcore-dev \
+	libxvidcore4 \
+	libyajl-dev \
+	make \
+	openssl \
+	perl \
+	pkg-config \
+	tar \
+	texi2html \
+	unzip \
+	zip \
+	zlib1g-dev
+
 
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
@@ -67,7 +147,7 @@ COPY ./scripts/build-lua /tmp/build-lua
 RUN /tmp/build-lua
 
 # Nginx build
-COPY ./scripts/build-openresty /tmp/build-openresty
+COPY ./scripts/build-modsecurity.sh /tmp/build-openresty
 RUN /tmp/build-openresty
 
 #############
