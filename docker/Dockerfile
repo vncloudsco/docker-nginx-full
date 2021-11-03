@@ -16,19 +16,6 @@ RUN apt-get install -y \
 	libffi-dev \
 	libssl-dev \
 	python3-venv \
-	apt-utils \
-	autoconf \
-	automake \
-	build-essential \
-	git \
-	libcurl4-openssl-dev \
-	libgeoip-dev liblmdb-dev \
-	libpcre++-dev \
-	libtool libxml2-dev \
-	libyajl-dev \
-	pkgconf \
-	wget \
-	zlib1g-dev
 
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
@@ -72,8 +59,18 @@ RUN apt-get update \
 	libssl-dev \
 	openssl unzip \
 	wget \
-	zlib1g-dev
-
+	zlib1g-dev \
+	apt-utils \
+	autoconf \
+	automake \
+	git \
+	libcurl4-openssl-dev \
+	libgeoip-dev liblmdb-dev \
+	libpcre++-dev \
+	libtool libxml2-dev \
+	libyajl-dev \
+	pkgconf \
+	
 # Lua build
 COPY ./scripts/build-lua /tmp/build-lua
 RUN /tmp/build-lua
