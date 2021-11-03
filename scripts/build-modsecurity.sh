@@ -17,7 +17,7 @@ git submodule init
 git submodule update
 ./build.sh
 ./configure
-make -j2 && make -j2 install 
+make -j4 && make -j4 install 
 popd
 
 # install modsec connector
@@ -71,14 +71,14 @@ cd /tmp/openresty
 	--with-stream_realip_module \
 	--with-stream_ssl_module \
 	--with-stream_ssl_preread_module \
-    --add-dynamic-module=/tmp/ModSecurity-nginx/
+    	--add-module=/tmp/ModSecurity-nginx/
 
-make -j2
+make -j4
 
 echo -e "${BLUE}❯ ${GREEN}OpenResty build completed${RESET}"
 # config modsec
 
-cd /etc/nginx
-mkdir modsec
-wget https://gist.githubusercontent.com/vncloudsco/0c2cd7c164022499ff5c243efa34c5f9/raw/ec7a20aa42b1fd390849dff2554b37b7b8e8e4dc/modsecurity.conf
-cp /tmp/ModSecurity/unicode.mapping /usr/local/openresty/nginx/modsec
+# cd /etc/nginx
+# mkdir modsec
+# wget https://gist.githubusercontent.com/vncloudsco/0c2cd7c164022499ff5c243efa34c5f9/raw/ec7a20aa42b1fd390849dff2554b37b7b8e8e4dc/modsecurity.conf
+# cp /tmp/ModSecurity/unicode.mapping /usr/local/openresty/nginx/modsec
