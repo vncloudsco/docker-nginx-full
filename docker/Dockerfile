@@ -58,9 +58,9 @@ RUN pip install --no-cache-dir cffi certbot \
 
 FROM debian:buster-slim as nginxbuilder
 
-ARG OPENRESTY_VERSION
-ARG LUA_VERSION
-ARG LUAROCKS_VERSION
+ARG OPENRESTY_VERSION=1.19.3.1
+ARG LUA_VERSION=5.1.5
+ARG LUAROCKS_VERSION=3.3.1
 
 RUN apt-get update \
 	&& apt-get install -y \
