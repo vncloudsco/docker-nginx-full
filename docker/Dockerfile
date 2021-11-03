@@ -15,7 +15,7 @@ RUN apt-get install -y \
 	python3-dev \
 	libffi-dev \
 	libssl-dev \
-	python3-venv \
+	python3-venv 
 
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
@@ -69,7 +69,7 @@ RUN apt-get update \
 	libpcre++-dev \
 	libtool libxml2-dev \
 	libyajl-dev \
-	pkgconf \
+	pkgconf
 	
 # Lua build
 COPY ./scripts/build-lua /tmp/build-lua
